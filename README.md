@@ -21,5 +21,6 @@ The project follows a multi-layer testing strategy:
 3. Create a `.env` file based on `.env.example` with your Alpaca Paper Trading keys.
 4. Run tests: `npx playwright test`.
 
+
 ---
 *Note: This project is part of a transition into Senior Quality Engineering, leveraging 15 years of risk analysis experience from the futures markets.*
