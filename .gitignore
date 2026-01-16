@@ -1,0 +1,15 @@
+
+# Playwright
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/
+
+# Security: Sensitive environment variables
+.env
+
+# System files
+.DS_Store
+dist/
