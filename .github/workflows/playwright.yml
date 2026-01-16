@@ -22,7 +22,7 @@ jobs:
       env:
         ALPACA_API_KEY: ${{ secrets.ALPACA_API_KEY }}
         ALPACA_SECRET_KEY: ${{ secrets.ALPACA_SECRET_KEY }}
-        ALPACA_BASE_URL: https://paper-api.alpaca.markets
+        ALPACA_BASE_URL: https://paper-api.alpaca.markets/v2
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
