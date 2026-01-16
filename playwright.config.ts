@@ -22,16 +22,34 @@ export default defineConfig({
 
   /* Configure projects for major browsers */
   projects: [
+    // 1. Setup project: This handles the initial authentication.
+    // It looks for 'auth.setup.spec.ts' to generate a reusable session.
+    {
+      name: 'setup',
+      testMatch: /auth.setup.spec.ts/,
+      // Local timeout for this project
+      timeout: 90000,
+    },
+    
+    // 2. API Tests: Independent logic verification.
     {
       name: 'api-tests',
       testDir: './tests/api-layer',
-      use: { ...devices['Desktop Chrome'] }, // Browsers are rarely needed for API, but required by config
+      use: { ...devices['Desktop Chrome'] },
     },
+    
+    // 3. UI Tests: Full browser-based end-to-end verification.
     {
       name: 'ui-tests',
       testDir: './tests/ui-layer',
-      use: { ...devices['Desktop Chrome'] },
+      // dependencies: ['setup'],  <-- Kommenter ut denne linjen midlertidig
+      use: { 
+        ...devices['Desktop Chrome'],
+        storageState: 'auth.json',
+      },
     },
+    
+    // 4. Security Tests: Header and protocol verification.
     {
       name: 'security-tests',
       testDir: './tests/security-layer',

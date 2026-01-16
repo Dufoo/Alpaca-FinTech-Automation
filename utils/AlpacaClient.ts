@@ -6,7 +6,7 @@ export class AlpacaClient {
 
     constructor(request: APIRequestContext) {
         this.request = request;
-        // Sentralisert håndtering av "headers"
+        // Centralized management of headers
         this.headers = {
             'APCA-API-KEY-ID': process.env.ALPACA_API_KEY || '',
             'APCA-API-SECRET-KEY': process.env.ALPACA_SECRET_KEY || '',
@@ -15,8 +15,8 @@ export class AlpacaClient {
     }
 
     /**
-     * GET-forespørsel
-     * Logikk: Inkluderer automatisk FinTech-autentisering
+     * GET-request
+     * Logic: Includes automatic FinTech authentication
      */
     async get(endpoint: string): Promise<APIResponse> {
         return await this.request.get(endpoint, {
@@ -25,8 +25,8 @@ export class AlpacaClient {
     }
 
     /**
-     * POST-forespørsel
-     * Brukes for å legge inn ordrer eller opprette ressurser
+     * POST-request
+     * Used to place orders or create resources
      */
     async post(endpoint: string, data: any): Promise<APIResponse> {
         return await this.request.post(endpoint, {

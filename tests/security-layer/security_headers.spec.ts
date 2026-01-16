@@ -12,15 +12,15 @@ test.describe('Alpaca API - Security Verification', () => {
     const response = await alpaca.get('/v2/account');
     const headers = response.headers();
 
-    // 1. Verifiser at API-et returnerer JSON (Standard krav)
+    // 1. Verify that the API returns JSON (Default requirement)
     expect(headers['content-type']).toContain('application/json');
 
-    // 2. Verifiser Strict-Transport-Security (HSTS)
-    // Dette er en kritisk sikkerhetsheader for finansielle tjenester
+    // 2. Verify Strict-Transport-Security (HSTS)
+    // This is a critical security header for financial services
     expect(headers['strict-transport-security']).toBeDefined();
     
-    // 3. Verifiser X-Request-ID (Viktig for sporbarhet/observability i DevSecOps)
-    // Dette gjør at vi kan spore en transaksjon gjennom alle systemer hvis noe feiler
+    // 3. Verify X-Request-ID (Important for traceability/observability in DevSecOps)
+    // This allows us to track a transaction through all systems if something goes wrong.
     expect(headers['x-request-id']).toBeDefined();
 
     console.log('Sikkerhetsverifisering vellykket: HSTS og Request-ID er tilstede.');

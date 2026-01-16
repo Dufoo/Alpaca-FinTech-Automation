@@ -9,6 +9,7 @@ node_modules/
 
 # Security: Sensitive environment variables
 .env
+auth.json
 
 # System files
 .DS_Store
