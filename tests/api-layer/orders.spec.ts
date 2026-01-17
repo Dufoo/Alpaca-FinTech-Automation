@@ -7,7 +7,7 @@ test.describe('Alpaca API - Order & Position Integration', () => {
     const symbol = 'AAPL';
 
     // 1. Place a market buy order
-    const response = await alpaca.post('/v2/orders', {
+    const response = await alpaca.post('/orders', {
       symbol: symbol,
       qty: '1',
       side: 'buy',
@@ -23,7 +23,7 @@ test.describe('Alpaca API - Order & Position Integration', () => {
 
     // 2. Integration check for positions
     await new Promise(resolve => setTimeout(resolve, 3000));
-    const positionResponse = await alpaca.get(`/v2/positions/${symbol}`);
+    const positionResponse = await alpaca.get(`/positions/${symbol}`);
     
     if (positionResponse.status() === 200) {
       console.log(`Confirmed: Position for ${symbol} is active.`);

@@ -9,7 +9,7 @@ test.describe('Alpaca API - Security Verification', () => {
   });
 
   test('should include essential security headers in the response', async () => {
-    const response = await alpaca.get('/v2/account');
+    const response = await alpaca.get('/account');
     const headers = response.headers();
 
     // 1. Verify that the API returns JSON (Default requirement)

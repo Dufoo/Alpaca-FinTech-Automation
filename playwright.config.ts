@@ -5,6 +5,17 @@ import path from 'path';
 // Read from ".env" file.
 dotenv.config({ path: path.resolve(__dirname, '.env') });
 
+// Define available environments
+const ENV_URLS = {
+  stage: 'https://paper-api.alpaca.markets/',
+  dev: 'https://paper-api.alpaca.markets/', // In a real scenario, these would be different
+  prod: 'https://api.alpaca.markets/',     // Real-money live API
+};
+
+// Logic to select the environment. Default to 'stage' (Paper Trading)
+const environment = process.env.TEST_ENV || 'stage';
+const selectedBaseURL = ENV_URLS[environment as keyof typeof ENV_URLS];
+
 export default defineConfig({
   testDir: './tests',
   fullyParallel: true,
@@ -14,10 +25,14 @@ export default defineConfig({
   reporter: 'html',
   
   use: {
-    // Base URL for our FinTech Target
-    baseURL: process.env.ALPACA_BASE_URL,
+    // Dynamically select baseURL based on environment variable
+    baseURL: selectedBaseURL,
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
+    // We can also add environment-specific tags for reporting
+    extraHTTPHeaders: {
+      'x-test-environment': environment,
+    }
   },
 
   /* Configure projects for major browsers */

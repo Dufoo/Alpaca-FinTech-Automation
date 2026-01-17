@@ -6,7 +6,6 @@ export class AlpacaClient {
 
     constructor(request: APIRequestContext) {
         this.request = request;
-        // Centralized management of headers
         this.headers = {
             'APCA-API-KEY-ID': process.env.ALPACA_API_KEY || '',
             'APCA-API-SECRET-KEY': process.env.ALPACA_SECRET_KEY || '',
@@ -15,32 +14,29 @@ export class AlpacaClient {
     }
 
     /**
-     * GET-request
-     * Logic: Includes automatic FinTech authentication
+     * Internal helper to ensure all requests hit the /v2 endpoint correctly.
+     * Logic: Prevents leading slashes from breaking the baseURL versioning.
      */
+    private buildUrl(endpoint: string): string {
+        const cleanPath = endpoint.startsWith('/') ? endpoint.substring(1) : endpoint;
+        return `v2/${cleanPath}`; // We explicitly use v2/ here
+    }
+
     async get(endpoint: string): Promise<APIResponse> {
-        return await this.request.get(endpoint, {
+        return await this.request.get(this.buildUrl(endpoint), {
             headers: this.headers,
         });
     }
 
-    /**
-     * POST-request
-     * Used to place orders or create resources
-     */
     async post(endpoint: string, data: Record<string, unknown>): Promise<APIResponse> {
-        return await this.request.post(endpoint, {
+        return await this.request.post(this.buildUrl(endpoint), {
             headers: this.headers,
             data: data,
         });
     }
 
-    /**
-     * DELETE request wrapper
-     * Useful for closing positions or canceling orders
-     */
     async delete(endpoint: string): Promise<APIResponse> {
-        return await this.request.delete(endpoint, {
+        return await this.request.delete(this.buildUrl(endpoint), {
             headers: this.headers,
         });
     }

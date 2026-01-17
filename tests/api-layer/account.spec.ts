@@ -6,7 +6,7 @@ test.describe('Alpaca API - Account Verification', () => {
 
     test('should retrieve account information with type safety', async ({ alpaca }) => {
         // 1. Perform request using the 'alpaca' fixture injected automatically
-        const response = await alpaca.get('/v2/account');
+        const response = await alpaca.get('/account');
         expect(response.status()).toBe(200);
 
         // 2. Cast the JSON response to our AlpacaAccount interface

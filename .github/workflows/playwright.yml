@@ -26,11 +26,12 @@ jobs:
     - name: Run Playwright tests
       run: npx playwright test
       env:
+        TEST_ENV: stage  # Clearly defining the environment for CI
         ALPACA_API_KEY: ${{ secrets.ALPACA_API_KEY }}
         ALPACA_SECRET_KEY: ${{ secrets.ALPACA_SECRET_KEY }}
         ALPACA_USERNAME: ${{ secrets.ALPACA_USERNAME }}
         ALPACA_PASSWORD: ${{ secrets.ALPACA_PASSWORD }}
-        ALPACA_BASE_URL: https://paper-api.alpaca.markets/v2
+        ALPACA_BASE_URL: https://paper-api.alpaca.markets/
     - name: Upload Report to Artifacts
       uses: actions/upload-artifact@v4
       if: always()

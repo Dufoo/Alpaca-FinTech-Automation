@@ -10,7 +10,7 @@ test.describe('Alpaca API - Negative Scenarios', () => {
 
   test('should return 404 when requesting a non-existent asset', async () => {
     // 1. We request a ticker symbol that definitely doesn't exist
-    const response = await alpaca.get('/v2/assets/NON_EXISTENT_TICKER');
+    const response = await alpaca.get('/assets/NON_EXISTENT_TICKER');
 
     // 2. Logic: The system MUST return 404 Not Found
     expect(response.status()).toBe(404);
@@ -23,7 +23,7 @@ test.describe('Alpaca API - Negative Scenarios', () => {
 
   test('should return 400 when placing an order with zero quantity', async () => {
     // 1. Attempt to place an invalid order (qty: 0)
-    const response = await alpaca.post('/v2/orders', {
+    const response = await alpaca.post('/orders', {
       symbol: 'AAPL',
       qty: '0', 
       side: 'buy',

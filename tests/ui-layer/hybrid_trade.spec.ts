@@ -7,7 +7,7 @@ test.describe('Alpaca - Hybrid API/UI Integration', () => {
     const symbol = 'MSFT';
 
     // 1. API: Place the order
-    const orderResponse = await alpaca.post('/v2/orders', {
+    const orderResponse = await alpaca.post('/orders', {
       symbol: symbol,
       qty: '1',
       side: 'buy',
