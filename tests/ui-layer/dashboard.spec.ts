@@ -1,21 +1,18 @@
-import { test, expect } from '@playwright/test';
-import { DashboardPage } from '../../pages/DashboardPage';
+import { test, expect } from '../../fixtures/baseTest';
 
 test.describe('Alpaca UI - Dashboard Verification', () => {
   
-  test('should display correct portfolio overview', async ({ page }) => {
-    const dashboard = new DashboardPage(page);
+  // We just pull in the 'dashboardPage' fixture directly
+  test('should display correct portfolio overview via fixture', async ({ dashboardPage }) => {
+    console.log('Navigating to dashboard...');
+    await dashboardPage.goto();
 
-    console.log('Navigerer til dashboard...');
-    await dashboard.goto();
+    console.log('Verifying that the dashboard is loaded...');
+    await dashboardPage.verifyDashboardLoaded();
 
-    console.log('Verifiserer at siden er lastet...');
-    await dashboard.verifyDashboardLoaded();
-
-    const balance = await dashboard.getBalanceText();
-    console.log(`SUKSESS: Din nåværende saldo er: ${balance}`);
+    const balance = await dashboardPage.getBalanceText();
+    console.log(`SUCCESS: Current balance is: ${balance}`);
     
-    // Verifiser at saldoen er et gyldig beløp (inneholder $)
     expect(balance).toContain('$');
   });
 });

@@ -1,20 +1,12 @@
-import { test, expect } from '@playwright/test';
-import { AlpacaClient } from '../../utils/AlpacaClient';
-import { DashboardPage } from '../../pages/DashboardPage';
+import { test, expect } from '../../fixtures/baseTest';
+import { AlpacaOrder } from '../../models/AlpacaModels';
 
 test.describe('Alpaca - Hybrid API/UI Integration', () => {
-  let alpaca: AlpacaClient;
 
-  test.beforeEach(async ({ request }) => {
-    alpaca = new AlpacaClient(request);
-  });
-
-  test('should place order via API and verify presence in UI Dashboard', async ({ page }) => {
+  test('should verify API order appears in UI using fixtures', async ({ alpaca, dashboardPage, page }) => {
     const symbol = 'MSFT';
-    const dashboard = new DashboardPage(page);
 
-    // 1. API STAGE: Place the order
-    console.log(`API: Legger inn kjøpsordre for ${symbol}...`);
+    // 1. API: Place the order
     const orderResponse = await alpaca.post('/v2/orders', {
       symbol: symbol,
       qty: '1',
@@ -24,20 +16,16 @@ test.describe('Alpaca - Hybrid API/UI Integration', () => {
     });
     
     expect(orderResponse.status()).toBe(200);
-    const orderData = await orderResponse.json();
-    console.log(`API: Ordre plassert med ID: ${orderData.id}`);
+    const order: AlpacaOrder = await orderResponse.json();
+    console.log(`API: Order placed with ID: ${order.id}`);
 
-    // Gi backend et sekund på å synkronisere før vi laster UI
     await page.waitForTimeout(2000); 
 
-    // 2. UI STAGE: Verify on Dashboard
-    console.log('UI: Navigerer til dashboard for å verifisere ordren...');
-    await dashboard.goto();
-    await dashboard.verifyDashboardLoaded();
-
-    // Vi sjekker at ordren dukker opp i "Recent Orders"-tabellen
-    await dashboard.verifyOrderVisible(symbol);
+    // 2. UI: Verify on Dashboard
+    await dashboardPage.goto();
+    await dashboardPage.verifyDashboardLoaded();
+    await dashboardPage.verifyOrderVisible(symbol);
     
-    console.log('HYBRID TEST SUKSESS: Sammenhengen mellom API og UI er bekreftet.');
+    console.log('HYBRID SUCCESS: API and UI consistency verified.');
   });
 });
