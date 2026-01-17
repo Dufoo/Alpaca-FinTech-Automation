@@ -18,7 +18,7 @@ export class DashboardPage {
         if (await acceptBtn.isVisible({ timeout: 5000 })) {
             await acceptBtn.click();
         }
-    } catch (e) {}
+    } catch {}
   }
 
   async verifyDashboardLoaded() {

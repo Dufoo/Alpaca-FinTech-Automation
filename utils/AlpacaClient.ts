@@ -28,7 +28,7 @@ export class AlpacaClient {
      * POST-request
      * Used to place orders or create resources
      */
-    async post(endpoint: string, data: any): Promise<APIResponse> {
+    async post(endpoint: string, data: Record<string, unknown>): Promise<APIResponse> {
         return await this.request.post(endpoint, {
             headers: this.headers,
             data: data,
