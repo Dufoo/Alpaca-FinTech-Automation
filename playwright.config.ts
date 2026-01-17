@@ -25,18 +25,21 @@ export default defineConfig({
     {
       name: 'setup',
       testMatch: /auth.setup.spec.ts/,
-      // Setup runs everywhere now (Local and GitHub)
+      // Logic: Skip this project in CI (GitHub Actions) because 2FA requires human interaction
+      grepInvert: process.env.CI ? /.*/ : undefined,
     },
     {
       name: 'api-tests',
       testDir: './tests/api-layer',
+      // Runs everywhere
       use: { ...devices['Desktop Chrome'] },
     },
     {
       name: 'ui-tests',
       testDir: './tests/ui-layer',
-      // UI tests now depend on the automated setup
-      dependencies: ['setup'],
+      // Logic: UI tests depend on 'setup' and are executed locally only
+      dependencies: process.env.CI ? [] : ['setup'],
+      grepInvert: process.env.CI ? /.*/ : undefined,
       use: { 
         ...devices['Desktop Chrome'],
         storageState: 'auth.json',
@@ -45,6 +48,7 @@ export default defineConfig({
     {
       name: 'security-tests',
       testDir: './tests/security-layer',
+      // Runs everywhere
       use: { ...devices['Desktop Chrome'] },
     },
   ],
