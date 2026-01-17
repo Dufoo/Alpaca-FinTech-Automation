@@ -1,5 +1,7 @@
 # Alpaca FinTech Automation Framework 
 
+### 🟢 [View Live Test Report](https://dufoo.github.io/Alpaca-FinTech-Automation/)
+
 This repository contains a professional automation framework built with **Playwright** and **TypeScript** for verifying financial trading systems.
 
 ## Prosjektoversikt (Norsk)
