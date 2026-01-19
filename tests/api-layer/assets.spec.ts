@@ -3,7 +3,7 @@ import { test, expect } from '../../fixtures/baseTest';
 test.describe('Alpaca API - Asset Verification', () => {
 
     test('should verify that TSLA is tradable', async ({ alpaca }) => {
-        const response = await alpaca.get('/v2/assets/TSLA');
+        const response = await alpaca.get('/assets/TSLA');
         expect(response.status()).toBe(200);
 
         const asset = await response.json();
