@@ -31,17 +31,12 @@ export class DashboardPage {
     return rawText.replace(/\n/g, '').trim();
   }
 
-  /**
-   * Verifiserer at en ordre er synlig i tabellen.
-   * Vi bruker en global tabell-søk som er mer robust enn å låse oss til 'section'.
-   */
   async verifyOrderVisible(symbol: string) {
     const orderRow = this.page.getByRole('row').filter({ hasText: symbol }).first();
     
     console.log(`Venter på at ordre for ${symbol} skal dukke opp i tabellen...`);
     await expect(orderRow).toBeVisible({ timeout: 20000 });
     
-    // Rettet syntaks her:
     await expect(orderRow.getByText(/accepted|filled/i).first()).toBeVisible();
     
     console.log(`Verifisert i UI: Ordre for ${symbol} ble funnet.`);
