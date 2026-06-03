@@ -23,7 +23,8 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
   reporter: 'html',
-  
+  globalTimeout: process.env.CI ? 600_000 : undefined,
+  timeout: 30_000,
   use: {
     // Dynamically select baseURL based on environment variable
     baseURL: selectedBaseURL,

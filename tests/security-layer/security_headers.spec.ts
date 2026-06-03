@@ -23,6 +23,6 @@ test.describe('Alpaca API - Security Verification', () => {
     // This allows us to track a transaction through all systems if something goes wrong.
     expect(headers['x-request-id']).toBeDefined();
 
-    console.log('Sikkerhetsverifisering vellykket: HSTS og Request-ID er tilstede.');
+    console.log('Security verification successful: HSTS and Request-ID are present.');
   });
 });
